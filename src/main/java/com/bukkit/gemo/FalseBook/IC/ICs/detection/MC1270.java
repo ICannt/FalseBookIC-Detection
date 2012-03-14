@@ -11,47 +11,44 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1270 extends BaseIC
-{
-  public MC1270()
-  {
-    this.ICName = "POWER SENSOR";
-    this.ICNumber = "[MC1270]";
-    setICGroup(ICGroup.DETECTION);
-    this.chipState = new BaseChip(true, false, false, "Clock", "", "");
-    this.chipState.setOutputs("Output: High if the block is powered", "", "");
-    this.chipState.setLines("Y offset, with 0 being the IC block. Leave blank to default to the block below.", "");
-    this.ICDescription = "The MC1270 checks for a powered block relative to the block behind the IC sign whenever the input goes from low to high. By default it checks the block directly underneath but this can be changed.<br /><br />The <a href=\"MC0270.html\">MC0270</a> is the selftriggered version.";
-  }
+public class MC1270 extends BaseIC {
 
-  public void checkCreation(SignChangeEvent event)
-  {
-    event.setLine(3, "");
-
-    if (event.getLine(2).length() < 1) {
-      event.setLine(2, "-1");
+    public MC1270() {
+        this.ICName = "POWER SENSOR";
+        this.ICNumber = "[MC1270]";
+        setICGroup(ICGroup.DETECTION);
+        this.chipState = new BaseChip(true, false, false, "Clock", "", "");
+        this.chipState.setOutputs("Output: High if the block is powered", "", "");
+        this.chipState.setLines("Y offset, with 0 being the IC block. Leave blank to default to the block below.", "");
+        this.ICDescription = "The MC1270 checks for a powered block relative to the block behind the IC sign whenever the input goes from low to high. By default it checks the block directly underneath but this can be changed.<br /><br />The <a href=\"MC0270.html\">MC0270</a> is the selftriggered version.";
     }
 
-    if (!Parser.isInteger(event.getLine(2))) {
-      SignUtils.cancelSignCreation(event, "The third line must be a number or be blank.");
-      return;
-    }
-  }
+    public void checkCreation(SignChangeEvent event) {
+        event.setLine(3, "");
 
-  public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs)
-  {
-    if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-      if (!Parser.isInteger(signBlock.getLine(2))) {
-        return;
-      }
-      int offSet = Parser.getInteger(signBlock.getLine(2), -1);
-      Block block = getICBlock(signBlock).getBlock().getRelative(0, offSet, 0);
-      if ((block.isBlockPowered()) || (block.isBlockIndirectlyPowered()))
-        switchLever(Lever.BACK, signBlock, true);
-      else {
-        switchLever(Lever.BACK, signBlock, false);
-      }
-      block = null;
+        if (event.getLine(2).length() < 1) {
+            event.setLine(2, "-1");
+        }
+
+        if (!Parser.isInteger(event.getLine(2))) {
+            SignUtils.cancelSignCreation(event, "The third line must be a number or be blank.");
+            return;
+        }
     }
-  }
+
+    public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
+        if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
+            if (!Parser.isInteger(signBlock.getLine(2))) {
+                return;
+            }
+            int offSet = Parser.getInteger(signBlock.getLine(2), -1);
+            Block block = getICBlock(signBlock).getBlock().getRelative(0, offSet, 0);
+            if ((block.isBlockPowered()) || (block.isBlockIndirectlyPowered())) {
+                switchLever(Lever.BACK, signBlock, true);
+            } else {
+                switchLever(Lever.BACK, signBlock, false);
+            }
+            block = null;
+        }
+    }
 }
