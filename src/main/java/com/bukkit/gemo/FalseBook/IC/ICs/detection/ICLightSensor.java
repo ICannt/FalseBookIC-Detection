@@ -7,27 +7,26 @@ import com.bukkit.gemo.FalseBook.IC.ICs.InputState;
 import com.bukkit.gemo.FalseBook.IC.ICs.Lever;
 import com.bukkit.gemo.utils.Parser;
 import com.bukkit.gemo.utils.SignUtils;
-import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1260 extends BaseIC {
+public class ICLightSensor extends BaseIC {
 
-    public MC1260() {
-        this.ICName = "WATER SENSOR";
-        this.ICNumber = "[MC1260]";
+    public ICLightSensor() {
+        this.ICName = "LIGHT SENSOR";
+        this.ICNumber = "ic.lightsensor";
         setICGroup(ICGroup.DETECTION);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
-        this.chipState.setOutputs("Output: High if water is present", "", "");
-        this.chipState.setLines("Y offset, with 0 being the IC block. Leave blank to default to the block below. ", "");
-        this.ICDescription = "The MC1260 checks for the presence of water relative to the block behind the IC sign whenever the input goes from low to high. By default it checks the block directly underneath but this can be changed.<br /><br />The <a href=\"MC0260.html\">MC0260</a> is the selftriggered version.";
+        this.chipState.setOutputs("Output: High if threshold is reached", "", "");
+        this.chipState.setLines("Minimum light level, 0 to 15.", "");
+        this.ICDescription = "The MC1262 checks to see if the light level of the block above the block behind the IC sign is greater than or equal to a configurable threshold whenever the input goes from low to high.<br /><br />The <a href=\"MC0262.html\">MC0262</a> is the selftriggered version.";
     }
 
     public void checkCreation(SignChangeEvent event) {
         event.setLine(3, "");
 
         if (event.getLine(2).length() < 1) {
-            event.setLine(2, "-1");
+            event.setLine(2, "15");
         }
 
         if (!Parser.isInteger(event.getLine(2))) {
@@ -41,14 +40,13 @@ public class MC1260 extends BaseIC {
             if (!Parser.isInteger(signBlock.getLine(2))) {
                 return;
             }
-            int offSet = Parser.getInteger(signBlock.getLine(2), -1);
-            Block block = getICBlock(signBlock).getBlock().getRelative(0, offSet, 0);
-            if ((block.getTypeId() == 8) || (block.getTypeId() == 9)) {
+            int minLight = Parser.getInteger(signBlock.getLine(2), 5);
+
+            if (getICBlock(signBlock).getBlock().getRelative(0, 1, 0).getLightLevel() >= minLight) {
                 switchLever(Lever.BACK, signBlock, true);
             } else {
                 switchLever(Lever.BACK, signBlock, false);
             }
-            block = null;
         }
     }
 }

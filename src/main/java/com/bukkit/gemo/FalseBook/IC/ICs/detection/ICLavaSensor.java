@@ -11,11 +11,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1261 extends BaseIC {
+public class ICLavaSensor extends BaseIC {
 
-    public MC1261() {
+    public ICLavaSensor() {
         this.ICName = "LAVA SENSOR";
-        this.ICNumber = "[MC1261]";
+        this.ICNumber = "ic.lavasensor";
         setICGroup(ICGroup.DETECTION);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output: high if lava is present", "", "");

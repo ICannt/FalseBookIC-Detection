@@ -16,11 +16,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.util.Vector;
 
-public class MC1272 extends BaseIC {
+public class ICPDetector extends BaseIC {
 
-    public MC1272() {
+    public ICPDetector() {
         this.ICName = "P-DETECTION";
-        this.ICNumber = "[MC1272]";
+        this.ICNumber = "ic.pdetector";
         setICGroup(ICGroup.DETECTION);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output", "", "");

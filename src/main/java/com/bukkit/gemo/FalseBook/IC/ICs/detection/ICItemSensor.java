@@ -18,11 +18,11 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-public class MC1264 extends BaseIC {
+public class ICItemSensor extends BaseIC {
 
-    public MC1264() {
+    public ICItemSensor() {
         this.ICName = "ITEM SENSOR";
-        this.ICNumber = "[MC1264]";
+        this.ICNumber = "ic.itemsensor";
         setICGroup(ICGroup.DETECTION);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output", "", "");

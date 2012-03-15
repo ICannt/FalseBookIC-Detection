@@ -30,13 +30,13 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.util.Vector;
 
-public class MC1271 extends BaseIC {
+public class ICDetector extends BaseIC {
 
     List<String> Types = new ArrayList<String>();
 
-    public MC1271() {
+    public ICDetector() {
         this.ICName = "DETECTION";
-        this.ICNumber = "[MC1271]";
+        this.ICNumber = "ic.detector";
         setICGroup(ICGroup.DETECTION);
 
         this.Types.add("PLAYER");

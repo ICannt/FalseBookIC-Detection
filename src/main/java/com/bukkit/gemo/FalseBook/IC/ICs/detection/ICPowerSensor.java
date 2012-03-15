@@ -11,11 +11,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1270 extends BaseIC {
+public class ICPowerSensor extends BaseIC {
 
-    public MC1270() {
+    public ICPowerSensor() {
         this.ICName = "POWER SENSOR";
-        this.ICNumber = "[MC1270]";
+        this.ICNumber = "ic.powersensor";
         setICGroup(ICGroup.DETECTION);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output: High if the block is powered", "", "");

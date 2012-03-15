@@ -13,11 +13,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1263 extends BaseIC {
+public class ICBlockSensor extends BaseIC {
 
-    public MC1263() {
+    public ICBlockSensor() {
         this.ICName = "BLOCK SENSOR";
-        this.ICNumber = "[MC1263]";
+        this.ICNumber = "ic.blocksensor";
         setICGroup(ICGroup.DETECTION);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output: High if the block is present", "", "");

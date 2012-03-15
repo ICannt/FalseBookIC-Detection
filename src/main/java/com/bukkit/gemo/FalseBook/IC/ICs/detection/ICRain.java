@@ -8,15 +8,15 @@ import com.bukkit.gemo.FalseBook.IC.ICs.Lever;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1282 extends BaseIC {
+public class ICRain extends BaseIC {
 
-    public MC1282() {
-        this.ICName = "IS IT STORMY";
-        this.ICNumber = "[MC1282]";
+    public ICRain() {
+        this.ICName = "IS IT RAINY";
+        this.ICNumber = "ic.rain";
         setICGroup(ICGroup.DETECTION);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
-        this.chipState.setOutputs("Output: High if it is raining and thundering", "", "");
-        this.ICDescription = "The MC1282 outputs high if it is raining and thundering when the input (the \"clock\") goes from low to high.<br /><br />The <a href=\"MC0282.html\">MC0282</a> is the selftriggered version.";
+        this.chipState.setOutputs("Output: High if it is raining, but not thundering", "", "");
+        this.ICDescription = "The MC1281 outputs high if it is raining, but not thundering, when the input (the \"clock\") goes from low to high.<br /><br />The <a href=\"MC0281.html\">MC0281</a> is the selftriggered version.";
     }
 
     public void checkCreation(SignChangeEvent event) {
@@ -26,7 +26,7 @@ public class MC1282 extends BaseIC {
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            switchLever(Lever.BACK, signBlock, (signBlock.getWorld().hasStorm()) && (signBlock.getWorld().isThundering()));
+            switchLever(Lever.BACK, signBlock, signBlock.getWorld().hasStorm());
         }
     }
 }
