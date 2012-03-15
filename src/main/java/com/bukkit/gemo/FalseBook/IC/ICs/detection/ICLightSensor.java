@@ -23,24 +23,25 @@ public class ICLightSensor extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
+        event.setLine(2, "");
         event.setLine(3, "");
 
-        if (event.getLine(2).length() < 1) {
-            event.setLine(2, "15");
+        if (event.getLine(1).length() < 1) {
+            event.setLine(1, "15");
         }
 
-        if (!Parser.isInteger(event.getLine(2))) {
-            SignUtils.cancelSignCreation(event, "The third line must be a number or be blank.");
+        if (!Parser.isInteger(event.getLine(1))) {
+            SignUtils.cancelSignCreation(event, "The second line must be a number or be blank.");
             return;
         }
     }
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            if (!Parser.isInteger(signBlock.getLine(2))) {
+            if (!Parser.isInteger(signBlock.getLine(1))) {
                 return;
             }
-            int minLight = Parser.getInteger(signBlock.getLine(2), 5);
+            int minLight = Parser.getInteger(signBlock.getLine(1), 5);
 
             if (getICBlock(signBlock).getBlock().getRelative(0, 1, 0).getLightLevel() >= minLight) {
                 switchLever(Lever.BACK, signBlock, true);

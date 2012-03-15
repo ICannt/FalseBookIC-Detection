@@ -26,11 +26,13 @@ public class ICBlockSensor extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        if (event.getLine(2).length() < 1) {
-            event.setLine(2, "-1");
+        event.setLine(3, "");
+        
+        if (event.getLine(1).length() < 1) {
+            event.setLine(1, "-1");
         }
 
-        String yOffset = event.getLine(2);
+        String yOffset = event.getLine(1);
         try {
             if (yOffset.length() > 0) {
                 Integer.parseInt(yOffset);
@@ -40,14 +42,14 @@ public class ICBlockSensor extends BaseIC {
             return;
         }
 
-        String[] split = event.getLine(3).split(":");
+        String[] split = event.getLine(2).split(":");
         try {
             if (!BlockUtils.isValidBlock(Integer.valueOf(split[0]).intValue())) {
                 SignUtils.cancelSignCreation(event, "Block not found");
                 return;
             }
         } catch (Exception e) {
-            if (!BlockUtils.isValidBlock(BlockUtils.getItemIDFromName(event.getLine(3)))) {
+            if (!BlockUtils.isValidBlock(BlockUtils.getItemIDFromName(event.getLine(2)))) {
                 SignUtils.cancelSignCreation(event, "Block not found");
                 return;
             }
@@ -58,13 +60,13 @@ public class ICBlockSensor extends BaseIC {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
             Block block = null;
 
-            ArrayList<FBItemType> thisItems = SignUtils.parseLineToItemListWithSize(signBlock.getLine(3), "-", false, 1, 1);
+            ArrayList<FBItemType> thisItems = SignUtils.parseLineToItemListWithSize(signBlock.getLine(2), "-", false, 1, 1);
             int offSet;
             if (thisItems == null) {
                 return;
             }
             try {
-                offSet = Integer.valueOf(signBlock.getLine(2)).intValue();
+                offSet = Integer.valueOf(signBlock.getLine(1)).intValue();
             } catch (Exception e) {
                 offSet = -1;
             }

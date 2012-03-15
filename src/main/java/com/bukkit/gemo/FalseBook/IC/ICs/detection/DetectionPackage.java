@@ -23,17 +23,17 @@ public class DetectionPackage extends ExternalICPackage {
         addIC(ICRain.class);
         addIC(ICStorm.class);
         
-        ICUpgrade.addUpgrader("[MC1230]", new ICUpgraderMC("ic.day"));
-        ICUpgrade.addUpgrader("[MC1260]", new ICUpgraderMC("ic.watersensor"));
-        ICUpgrade.addUpgrader("[MC1261]", new ICUpgraderMC("ic.lavasensor"));
-        ICUpgrade.addUpgrader("[MC1262]", new ICUpgraderMC("ic.lightsensor"));
-        ICUpgrade.addUpgrader("[MC1263]", new ICUpgraderMC("ic.blocksensor"));
-        ICUpgrade.addUpgrader("[MC1264]", new ICUpgraderMC("ic.itemsensor"));
-        ICUpgrade.addUpgrader("[MC1270]", new ICUpgraderMC("ic.powersensor"));
-        ICUpgrade.addUpgrader("[MC1271]", new ICUpgraderMC("ic.detector"));
-        ICUpgrade.addUpgrader("[MC1272]", new ICUpgraderMC("ic.pdetector"));
-        ICUpgrade.addUpgrader("[MC1280]", new ICUpgraderMC("ic.sun"));
-        ICUpgrade.addUpgrader("[MC1281]", new ICUpgraderMC("ic.rain"));
-        ICUpgrade.addUpgrader("[MC1282]", new ICUpgraderMC("ic.storm"));
+        addUpgrader("[MC1230]", new ICUpgraderMC("ic.day"));
+        addUpgrader("[MC1260]", new ICUpgraderMC("ic.watersensor"));
+        addUpgrader("[MC1261]", new ICUpgraderMC("ic.lavasensor"));
+        addUpgrader("[MC1262]", new ICUpgraderMC("ic.lightsensor"));
+        addUpgrader("[MC1263]", new ICUpgraderMC("ic.blocksensor"));
+        addUpgrader("[MC1264]", new ICUpgraderMC("ic.itemsensor"));
+        addUpgrader("[MC1270]", new ICUpgraderMC("ic.powersensor"));
+        addUpgrader("[MC1271]", new ICUpgraderMC("ic.detector"));
+        addUpgrader("[MC1272]", new ICUpgraderMC("ic.pdetector"));
+        addUpgrader("[MC1280]", new ICUpgraderMC("ic.sun"));
+        addUpgrader("[MC1281]", new ICUpgraderMC("ic.rain"));
+        addUpgrader("[MC1282]", new ICUpgraderMC("ic.storm"));
     }
 }

@@ -29,51 +29,53 @@ public class ICPDetector extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        if (!Parser.isIntegerWithOffset(event.getLine(2))) {
-            SignUtils.cancelSignCreation(event, "Line 3 must be a number or a number with a vector.");
+        event.setLine(3, "");
+        
+        if (!Parser.isIntegerWithOffset(event.getLine(1))) {
+            SignUtils.cancelSignCreation(event, "Line 2 must be a number or a number with a vector.");
             return;
         }
 
-        Integer radius = Parser.getIntegerFromOffsetLine(event.getLine(2), 0);
-        Vector vector = Parser.getVectorFromOffsetLine(event.getLine(2));
+        Integer radius = Parser.getIntegerFromOffsetLine(event.getLine(1), 0);
+        Vector vector = Parser.getVectorFromOffsetLine(event.getLine(1));
         if (radius < 0) {
             radius = 0;
         }
         if ((vector.getBlockX() != 0) || (vector.getBlockY() != 0) || (vector.getBlockZ() != 0)) {
-            event.setLine(2, radius + "=" + vector.getBlockX() + ":" + vector.getBlockY() + ":" + vector.getBlockZ());
+            event.setLine(1, radius + "=" + vector.getBlockX() + ":" + vector.getBlockY() + ":" + vector.getBlockZ());
         } else {
-            event.setLine(2, radius.toString());
+            event.setLine(1, radius.toString());
         }
-        if (event.getLine(3).length() < 0) {
-            SignUtils.cancelSignCreation(event, "Please enter a Playername in Line 4");
+        if (event.getLine(2).length() < 0) {
+            SignUtils.cancelSignCreation(event, "Please enter a Playername in Line 3");
             return;
         }
-        String[] split = event.getLine(3).split(":");
+        String[] split = event.getLine(2).split(":");
         if (split.length < 2) {
-            SignUtils.cancelSignCreation(event, "Wrong syntax in Line 4. Use p:<playername> or g:<groupname> or -g:<groupname>");
+            SignUtils.cancelSignCreation(event, "Wrong syntax in Line 3. Use p:<playername> or g:<groupname> or -g:<groupname>");
             return;
         }
         if ((!split[0].equalsIgnoreCase("p")) && (!split[0].equalsIgnoreCase("g")) && (!split[0].equalsIgnoreCase("-g"))) {
-            SignUtils.cancelSignCreation(event, "Wrong syntax in Line 4. Use p:<playername> or g:<groupname> or -g:<groupname>");
+            SignUtils.cancelSignCreation(event, "Wrong syntax in Line 3. Use p:<playername> or g:<groupname> or -g:<groupname>");
             return;
         }
     }
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            if (!Parser.isIntegerWithOffset(signBlock.getLine(2))) {
+            if (!Parser.isIntegerWithOffset(signBlock.getLine(1))) {
                 return;
             }
-            int range = Parser.getIntegerFromOffsetLine(signBlock.getLine(2), 0);
+            int range = Parser.getIntegerFromOffsetLine(signBlock.getLine(1), 0);
             if (range < 0) {
                 range = 0;
             }
-            Vector offsetVector = Parser.getVectorFromOffsetLine(signBlock.getLine(2));
+            Vector offsetVector = Parser.getVectorFromOffsetLine(signBlock.getLine(1));
 
             boolean result = false;
             Location blockLoc = getICBlock(signBlock, offsetVector);
 
-            String[] split = signBlock.getLine(3).split(":");
+            String[] split = signBlock.getLine(2).split(":");
             if (split.length < 2) {
                 return;
             }

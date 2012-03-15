@@ -24,24 +24,25 @@ public class ICPowerSensor extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
+        event.setLine(2, "");
         event.setLine(3, "");
 
-        if (event.getLine(2).length() < 1) {
-            event.setLine(2, "-1");
+        if (event.getLine(1).length() < 1) {
+            event.setLine(1, "-1");
         }
 
-        if (!Parser.isInteger(event.getLine(2))) {
-            SignUtils.cancelSignCreation(event, "The third line must be a number or be blank.");
+        if (!Parser.isInteger(event.getLine(1))) {
+            SignUtils.cancelSignCreation(event, "The second line must be a number or be blank.");
             return;
         }
     }
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            if (!Parser.isInteger(signBlock.getLine(2))) {
+            if (!Parser.isInteger(signBlock.getLine(1))) {
                 return;
             }
-            int offSet = Parser.getInteger(signBlock.getLine(2), -1);
+            int offSet = Parser.getInteger(signBlock.getLine(1), -1);
             Block block = getICBlock(signBlock).getBlock().getRelative(0, offSet, 0);
             if ((block.isBlockPowered()) || (block.isBlockIndirectlyPowered())) {
                 switchLever(Lever.BACK, signBlock, true);
